@@ -3,8 +3,19 @@ package com.maintainhub.cmms.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for {@link User} class.
+ * Tests the creation, role assignment, and equality of user objects.
+ *
+ * @author MaintainHub Team
+ * @version 1.0
+ */
 class UserTest {
 
+    /**
+     * Tests the creation of a user with basic properties.
+     * Verifies that all user fields are correctly set and accessible.
+     */
     @Test
     void testUserCreation() {
         User user = new User();
@@ -19,6 +30,10 @@ class UserTest {
         assertEquals("Test User", user.getFullName());
     }
 
+    /**
+     * Tests the assignment of roles to a user.
+     * Verifies that roles are correctly added and accessible.
+     */
     @Test
     void testUserWithRoles() {
         User user = new User();
@@ -38,6 +53,11 @@ class UserTest {
         assertTrue(user.getRoles().contains(userRole));
     }
 
+    /**
+     * Tests the equality and hashCode methods of User.
+     * Verifies that two User objects with the same data are considered equal
+     * and have the same hashCode.
+     */
     @Test
     void testUserEquality() {
         User user1 = new User();
