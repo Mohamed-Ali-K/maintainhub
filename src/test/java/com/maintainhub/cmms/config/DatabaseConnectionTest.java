@@ -9,6 +9,13 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Integration test for database connection configuration.
+ * Tests the connection to the PostgreSQL database using dynamic property configuration.
+ *
+ * @author MaintainHub Team
+ * @version 1.0
+ */
 @SpringBootTest
 @ActiveProfiles("test")
 public class DatabaseConnectionTest {
@@ -16,6 +23,12 @@ public class DatabaseConnectionTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Configures dynamic database properties for testing.
+     * Uses environment variables with fallback values for database connection.
+     *
+     * @param registry The dynamic property registry to configure
+     */
     @DynamicPropertySource
     static void databaseProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", () -> 
@@ -29,6 +42,11 @@ public class DatabaseConnectionTest {
             System.getenv().getOrDefault("DB_PASSWORD", "cmms_password"));
     }
 
+    /**
+     * Tests the database connection by executing a simple query.
+     * Verifies that the JdbcTemplate is properly configured and can connect to the database.
+     * Provides detailed error information if the connection fails.
+     */
     @Test
     public void testDatabaseConnection() {
         assertNotNull(jdbcTemplate, "JdbcTemplate should not be null");
