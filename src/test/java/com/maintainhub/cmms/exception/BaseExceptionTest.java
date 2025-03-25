@@ -3,8 +3,19 @@ package com.maintainhub.cmms.exception;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for {@link BaseException} class.
+ * Tests the creation and behavior of base exceptions with and without causes.
+ *
+ * @author MaintainHub Team
+ * @version 1.0
+ */
 class BaseExceptionTest {
 
+    /**
+     * Tests the creation of a base exception with error code and message.
+     * Verifies that the exception is created with the correct properties.
+     */
     @Test
     void testBaseExceptionCreation() {
         String code = "TEST_ERROR";
@@ -17,6 +28,10 @@ class BaseExceptionTest {
         assertNull(exception.getCause());
     }
 
+    /**
+     * Tests the creation of a base exception with error code, message, and cause.
+     * Verifies that the exception is created with the correct properties and cause.
+     */
     @Test
     void testBaseExceptionWithCause() {
         String code = "TEST_ERROR";
@@ -30,6 +45,10 @@ class BaseExceptionTest {
         assertEquals(cause, exception.getCause());
     }
 
+    /**
+     * Tests that the base exception has a valid stack trace.
+     * Verifies that the exception maintains proper stack trace information.
+     */
     @Test
     void testBaseExceptionStackTrace() {
         BaseException exception = new BaseException("TEST_ERROR", "Test error message");

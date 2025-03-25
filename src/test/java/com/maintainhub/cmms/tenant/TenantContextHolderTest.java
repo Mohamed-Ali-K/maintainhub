@@ -3,8 +3,19 @@ package com.maintainhub.cmms.tenant;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for {@link TenantContextHolder} class.
+ * Tests the thread-safe management of tenant context using ThreadLocal.
+ *
+ * @author MaintainHub Team
+ * @version 1.0
+ */
 class TenantContextHolderTest {
 
+    /**
+     * Tests basic tenant context holder operations.
+     * Verifies setting, getting, and clearing of tenant context.
+     */
     @Test
     void testTenantContextHolder() {
         // Create a test tenant context
@@ -24,6 +35,12 @@ class TenantContextHolderTest {
         assertNull(TenantContextHolder.getContext());
     }
 
+    /**
+     * Tests thread isolation of tenant context.
+     * Verifies that tenant context is properly isolated between different threads.
+     *
+     * @throws InterruptedException if thread operations are interrupted
+     */
     @Test
     void testThreadLocalIsolation() throws InterruptedException {
         // Create two different contexts
