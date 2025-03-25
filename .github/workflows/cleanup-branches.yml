@@ -1,0 +1,27 @@
+name: Cleanup Merged Branches
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Delete merged branches
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          
+          # Delete local merged branches
+          git branch --merged develop | grep -v '^[ *]*develop$' | grep -v '^[ *]*main$' | xargs -r git branch -d
+          
+          # Delete remote merged branches
+          git branch -r --merged develop | grep -v '^[ *]*origin/develop$' | grep -v '^[ *]*origin/main$' | sed 's/origin\///' | xargs -r git push origin --delete 
