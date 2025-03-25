@@ -21,9 +21,12 @@ jobs:
           git config --global user.name "GitHub Actions"
           
           # Delete local merged branches
-          git branch --merged develop | grep -v '^[ *]*develop$' | grep -v '^[ *]*main$' | xargs -r git branch -d
+          git branch --merged develop | grep -v '^[ *]*develop$' | grep -v '^[ *]*main$' | xargs -r git branch -d || true
           
           # Delete remote merged branches
-          git branch -r --merged develop | grep -v '^[ *]*origin/develop$' | grep -v '^[ *]*origin/main$' | sed 's/origin\///' | while read branch; do
-            git push origin --delete "$branch"
+          for branch in $(git branch -r --merged develop | grep -v '^[ *]*origin/develop$' | grep -v '^[ *]*origin/main$' | sed 's/origin\///'); do
+            if [ -n "$branch" ]; then
+              echo "Deleting remote branch: $branch"
+              git push origin --delete "$branch" || echo "Failed to delete $branch"
+            fi
           done 
