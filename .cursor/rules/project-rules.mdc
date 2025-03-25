@@ -1,0 +1,84 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can [API_Endpoints.md](mdc:docs/API_Endpoints.md) [Backend_Development_Plan.md](mdc:docs/Backend_Development_Plan.md) [CMMS_Planning.md](mdc:docs/CMMS_Planning.md) [Database_Schema_Design.md](mdc:docs/Database_Schema_Design.md) [README.md](mdc:docs/README.md) files here
+- You can use markdown but dont have to
+# CMMS Project Development Rules
+
+## 1. Documentation-First Development
+- All development must strictly follow the documentation in the `/docs` folder
+- Any deviations from documented plans require team discussion and documentation updates
+- Documentation updates must be made before implementing changes
+
+## 2. Task Tracking
+- Each completed task must be marked with a checkmark (✓) in the relevant documentation
+- Task completion format:
+  ```markdown
+  - [ ] Task description
+  - [✓] Completed task
+  ```
+
+## 3. Documentation Structure
+- `CMMS_Planning.md`: Overall system architecture and features
+- `Backend_Development_Plan.md`: 6-month development roadmap
+- `Database_Schema_Design.md`: Database structure and relationships
+- `API_Endpoints.md`: API specifications and endpoints
+
+## 4. Development Workflow
+1. Review relevant documentation before starting any task
+2. Follow the development plan timeline
+3. Implement features according to specifications
+4. Update documentation with completed tasks
+5. Create pull requests with documentation updates
+
+## 5. Code Organization
+- Follow the documented package structure
+- Maintain multi-tenant architecture principles
+- Keep code aligned with API specifications
+- Follow database schema design
+
+## 6. Quality Assurance
+- All code must pass unit tests
+- Integration tests for multi-tenant scenarios
+- Security testing for tenant isolation
+- Performance testing for scalability
+
+## 7. Documentation Updates
+- Keep documentation in sync with code changes
+- Document any technical decisions
+- Update API documentation for new endpoints
+- Maintain changelog for significant changes
+
+## 8. Version Control
+- Create feature branches for new development
+- Follow semantic versioning
+- Include documentation updates in commits
+- Reference documentation in commit messages
+
+## 9. Review Process
+- Code review must include documentation review
+- Verify documentation accuracy
+- Ensure task completion is properly marked
+- Check for documentation consistency
+
+## 10. Deployment
+- Follow documented deployment procedures
+- Verify multi-tenant configuration
+- Ensure database migrations are documented
+- Update deployment documentation as needed
+
+## Task Completion Checklist
+Before marking a task as complete:
+1. [ ] Implementation matches documentation
+2. [ ] Tests are passing
+3. [ ] Code review completed
+4. [ ] Documentation updated
+5. [ ] Task marked with checkmark
+6. [ ] Related documentation cross-referenced
+7. [ ] No breaking changes to existing features
+8. [ ] Multi-tenant considerations addressed 
