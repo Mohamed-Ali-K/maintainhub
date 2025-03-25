@@ -48,10 +48,53 @@ jobs:
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/maintainhub-cmms:latest
 
     - name: Deploy to production
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+        SSH_USER: ${{ secrets.SSH_USER }}
       run: |
-        echo "Deploying to production..."
-        # Add your deployment steps here
-        # For example:
-        # - SSH into your server
-        # - Pull the latest image
-        # - Restart the container 
+        # Install SSH key
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+        ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+
+        # Deploy using SSH
+        ssh -i ~/.ssh/deploy_key $SSH_USER@$SSH_HOST << 'ENDSSH'
+          # Pull latest image
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/maintainhub-cmms:latest
+
+          # Stop and remove existing container
+          docker stop maintainhub-cmms || true
+          docker rm maintainhub-cmms || true
+
+          # Run new container
+          docker run -d \
+            --name maintainhub-cmms \
+            --restart unless-stopped \
+            -p 8080:8080 \
+            -e DB_HOST=${{ secrets.DB_HOST }} \
+            -e DB_PORT=${{ secrets.DB_PORT }} \
+            -e DB_NAME=${{ secrets.DB_NAME }} \
+            -e DB_USER=${{ secrets.DB_USER }} \
+            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            -e JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }} \
+            -e SERVER_PORT=${{ secrets.SERVER_PORT }} \
+            -e SPRING_PROFILES_ACTIVE=prod \
+            -e LOG_LEVEL=INFO \
+            ${{ secrets.DOCKERHUB_USERNAME }}/maintainhub-cmms:latest
+
+          # Wait for health check
+          echo "Waiting for application to be healthy..."
+          sleep 30
+
+          # Check container health
+          if docker ps | grep -q "maintainhub-cmms.*healthy"; then
+            echo "Deployment successful!"
+          else
+            echo "Deployment failed - container is not healthy"
+            docker logs maintainhub-cmms
+            exit 1
+          fi
+        ENDSSH 

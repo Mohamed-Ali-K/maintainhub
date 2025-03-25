@@ -48,5 +48,10 @@ set_secret "SERVER_PORT" "8080"
 set_secret "DOCKERHUB_USERNAME" "your_dockerhub_username"
 set_secret "DOCKERHUB_TOKEN" "your_dockerhub_token"
 
+# Deployment Configuration
+set_secret "SSH_HOST" "your_production_server_host"
+set_secret "SSH_USER" "your_ssh_user"
+set_secret "SSH_PRIVATE_KEY" "your_ssh_private_key"
+
 echo -e "${GREEN}All secrets have been set!${NC}"
 echo -e "${RED}Please make sure to update the values with your actual production credentials!${NC}" 

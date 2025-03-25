@@ -24,6 +24,7 @@ dependencies {
     // Database
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.flywaydb:flyway-core'
     
     // Security
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
