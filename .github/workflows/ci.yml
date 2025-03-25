@@ -50,10 +50,10 @@ jobs:
         JWT_EXPIRATION: 86400000
         SERVER_PORT: 8080
         SPRING_PROFILES_ACTIVE: test
-        LOG_LEVEL: INFO
+        LOG_LEVEL: DEBUG
 
     - name: Run Tests
-      run: ./gradlew test
+      run: ./gradlew test --info
       env:
         DB_HOST: localhost
         DB_PORT: 5432
@@ -64,4 +64,11 @@ jobs:
         JWT_EXPIRATION: 86400000
         SERVER_PORT: 8080
         SPRING_PROFILES_ACTIVE: test
-        LOG_LEVEL: INFO 
+        LOG_LEVEL: DEBUG
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: build/reports/tests/test/ 
